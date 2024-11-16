@@ -86,6 +86,7 @@ const Login = () => {
                             onChange={handleToggle} checked={persist}/>
                         Trust This Device</label>
                 </form>
+                <p>You do not have an account: <Link to="/register">Register</Link></p>
             </main>
             <footer>
                 <Link to="/">Back to Home</Link>
