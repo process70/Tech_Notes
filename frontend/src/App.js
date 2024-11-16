@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Public from "./components/Public";
 import Login from "./features/auth/Login";
+import Register from "./features/auth/Register";
 import DashLayout from "./components/DashLayout";
 import Welcome from "./features/auth/Welcome";
 import UsersList from "./features/users/UsersList";
@@ -22,6 +23,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         {/* these are the layout's children */}
         <Route index element={<Public />} />
+        <Route path="register" element={<Register />} />
         <Route path="login" element={<Login />} />
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={Object.values(roles)} />}>
