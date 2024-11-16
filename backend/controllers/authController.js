@@ -3,6 +3,30 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
 const User = require("../models/User")
 
+const register = asyncHandler(async (req, res) => {
+    console.log(req.body)
+    const { username, password, confirmPassword} = req.body
+    
+    if(!username || !password || !confirmPassword) {
+        return res.status(400).json({message: 'all fields are required'})
+    }
+
+    const duplicate = await User.findOne({username}).exec()
+    // status 409 stands for Conflict
+    if(duplicate) return res.status(409).json({message: 'duplicate username'})
+
+    if(password !== confirmPassword) return res.status(409).json({message: 'password does not match'})
+    
+    const newUser = {
+        username,
+        password:  await bcrypt.hash(password, 10)
+    }
+    const createdUser = await User.create(newUser) //best practices for creating a new user
+    
+    if(createdUser) res.status(200).json({createdUser})
+    else return res.status(400).json({message: 'unable to create user'})
+})
+
 const login = asyncHandler(async(req, res) => {
     const { username, password } = req.body
 
@@ -10,7 +34,11 @@ const login = asyncHandler(async(req, res) => {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
+    console.log({username, password})
+
     const foundUser = await User.findOne({ username }).exec()
+
+    console.log({foundUser})
 
     if (!foundUser || !foundUser.active) return res.status(401).
                 json({ message: 'Unauthorized, unbale to generate the token, user is not found' })
@@ -90,4 +118,4 @@ const logout = (req, res) => {
     console.log('loggin out')
 }
 
-module.exports = {login, logout, refresh}
+module.exports = {register, login, logout, refresh}
