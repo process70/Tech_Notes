@@ -1,7 +1,7 @@
 const express = require("express")
 const authRoutes = express.Router()
 const loginLimiter = require("../middleware/loginLimiter")
-const { login, logout, refresh } = require("../controllers/authController")
+const { login, logout, refresh, register } = require("../controllers/authController")
 
 authRoutes.get("/refresh", refresh)
 authRoutes.post("/register", register)
