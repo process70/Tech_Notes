@@ -4,6 +4,7 @@ const loginLimiter = require("../middleware/loginLimiter")
 const { login, logout, refresh } = require("../controllers/authController")
 
 authRoutes.get("/refresh", refresh)
+authRoutes.post("/register", register)
 authRoutes.post("/login", loginLimiter, login)
 authRoutes.post("/logout", logout)
 
