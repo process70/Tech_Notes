@@ -18,7 +18,10 @@ export const usersSlice = apiSlice.injectEndpoints({
                 return response.status === 200 && !result.isError
             },           
             transformResponse: responseData => {
-                const loadedUsers = responseData?.map(user => {
+                if (!Array.isArray(responseData)) {
+                    return usersAdapter.setAll(initialState, [])
+                }
+                const loadedUsers = responseData.map(user => {
                     user.id = user._id
                     // return edited user
                     return user
