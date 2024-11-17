@@ -19,7 +19,8 @@ const register = asyncHandler(async (req, res) => {
     
     const newUser = {
         username,
-        password:  await bcrypt.hash(password, 10)
+        password:  await bcrypt.hash(password, 10),
+        roles: ["Employee"]
     }
     const createdUser = await User.create(newUser) //best practices for creating a new user
     
@@ -33,8 +34,6 @@ const login = asyncHandler(async(req, res) => {
     if (!username || !password) {
         return res.status(400).json({ message: 'All fields are required' })
     }
-
-    console.log({username, password})
 
     const foundUser = await User.findOne({ username }).exec()
 
