@@ -20,6 +20,6 @@ const userSchema = new Schema({
     },
 }, {timestamps: true})
 
-const userModal = model('users', userSchema)
+const userModal = model('User', userSchema)
 
 module.exports = userModal
