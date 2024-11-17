@@ -27,7 +27,6 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth allowedRoles={Object.values(roles)} />}>
-            <Route element={<Prefetch />}>
               <Route path="dash" element={<DashLayout />}>
                 <Route index element={<Welcome />} />
                 <Route element={<RequireAuth allowedRoles={[roles.ADMIN, roles.MANAGER]} />}>
@@ -44,7 +43,6 @@ function App() {
                   <Route path=":id" element={<EditNote />} />
                 </Route>
               </Route>
-            </Route>
           </Route>
         </Route>
       </Route>
