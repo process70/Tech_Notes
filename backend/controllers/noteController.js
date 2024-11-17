@@ -4,10 +4,8 @@ const User = require("../models/User")
 
 const getAllNotes = asyncHandler(async (req, res) => {
     // The lean() method is used to return plain JavaScript objects instead of Mongoose documents.   
-    const notes = await Note.find().populate({
-				path: "user",
-				select: "-password",
-			})
+    const notes = await Note.find().populate("user")
+	
     if(!notes.length) 
         return res.status(204).json({message: 'no notes found'})
     
