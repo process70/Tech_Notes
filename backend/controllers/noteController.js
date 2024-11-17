@@ -10,12 +10,12 @@ const getAllNotes = asyncHandler(async (req, res) => {
     
     // waits for all the asynchronous operations to complete before assigning the result to notesWithUser
     // sending the response with the actual usernames added to the data
-    const notesWithUser = await Promise.all(notes.map(async (note) => {
+    const notesWithUser = notes.map((note) => {
         const user = await User.findById(note.user)
         note = { ...note, username: user.username}
         //returning the edited note
         return note
-    }))
+    })
     res.json(notesWithUser)
 })
 
